@@ -1,4 +1,4 @@
-name: ECR Management workflow
+name: RDS Management workflow
 on:
   workflow_dispatch:
     inputs:
