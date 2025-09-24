@@ -24,6 +24,8 @@ jobs:
   rds-management:
     name: RDS Management
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
     steps:
       - id: RDS-deploy
         uses: bitovi/github-actions-deploy-rds@v0.1.7

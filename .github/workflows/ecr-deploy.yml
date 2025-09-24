@@ -24,8 +24,8 @@ jobs:
   ecr-management:
     name: ECR Management
     runs-on: ubuntu-latest
-    #environment: 
-    #    name: ${{ inputs.environment }}
+    environment: 
+        name: ${{ inputs.environment }}
     steps:
       - id: ECR-deploy
         uses: bitovi/github-actions-deploy-aws-ecr-registry@v0.1.1
