@@ -1,0 +1,86 @@
+name: Terraform IAM Infra Management
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Action to perform (create or destroy)"
+        required: true
+        default: create
+        type: choice
+        options:
+          - create
+          - destroy
+      environment:
+        description: "Environment name (used as suffix for resources)"
+        required: true
+        default: staging
+        type: choice
+        options:
+          - develop
+          - staging
+          - production
+
+jobs:
+  terraform-iam:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ${{ vars.AWS_DEFAULT_REGION || 'us-east-1' }}
+      TF_BUCKET: aa-iam-tf-state-${{ github.event.inputs.environment }}
+      TF_STATE_KEY: iam-${{ github.event.inputs.environment }}.tfstate
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+      TF_DIR: terraform/iam
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_DEFAULT_REGION || 'us-east-1' }}
+
+      - name: Create S3 bucket for Terraform state (if needed)
+        run: |
+          if ! aws s3api head-bucket --bucket "$TF_BUCKET" 2>/dev/null; then
+            echo "Creating S3 bucket $TF_BUCKET for Terraform state..."
+            aws s3api create-bucket --bucket "$TF_BUCKET" --region "$AWS_REGION" $(if [ "$AWS_REGION" != "us-east-1" ]; then echo "--create-bucket-configuration LocationConstraint=$AWS_REGION"; fi)
+          else
+            echo "S3 bucket $TF_BUCKET already exists."
+          fi
+
+      - name: Setup Terraform backend and provider config
+        working-directory: ${{ env.TF_DIR}}
+        run: |
+          cat > $TF_DIR/backend.tf <<EOF
+          terraform {
+            backend "s3" {
+              bucket = "$TF_BUCKET"
+              key    = "$TF_STATE_KEY"
+              region = "$AWS_REGION"
+            }
+          }
+          EOF
+
+          cat > $TF_DIR/provider.tf <<EOF
+          provider "aws" {
+            region = "$AWS_REGION"
+          }
+          EOF
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: ${{ env.TF_DIR }}
+        run: terraform init
+
+      - name: Terraform Apply or Destroy
+        working-directory: ${{ env.TF_DIR }}
+        run: |
+          if [ "${{ github.event.inputs.action }}" = "create" ]; then
+            terraform apply -auto-approve -var environment=${{ env.ENVIRONMENT }} -var aws_region=${{ env.AWS_REGION }}
+          else
+            terraform destroy -auto-approve -var environment=${{ env.ENVIRONMENT }} -var aws_region=${{ env.AWS_REGION }}
+          fi
