@@ -1,4 +1,4 @@
-name: Terraform IAM Infra Management
+name: IAM Role Management
 
 on:
   workflow_dispatch:
@@ -12,18 +12,20 @@ on:
           - create
           - destroy
       environment:
-        description: "Environment name (used as suffix for resources)"
+        description: 'The environment to deploy to'
         required: true
-        default: staging
         type: choice
         options:
-          - develop
+          - development
           - staging
           - production
+        default: development
 
 jobs:
   terraform-iam:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
     env:
       AWS_REGION: ${{ vars.AWS_DEFAULT_REGION || 'us-east-1' }}
       TF_BUCKET: aa-iam-tf-state-${{ github.event.inputs.environment }}
