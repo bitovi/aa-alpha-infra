@@ -55,7 +55,7 @@ jobs:
       - name: Setup Terraform backend and provider config
         working-directory: ${{ env.TF_DIR}}
         run: |
-          cat > $TF_DIR/backend.tf <<EOF
+          cat > backend.tf <<EOF
           terraform {
             backend "s3" {
               bucket = "$TF_BUCKET"
@@ -65,7 +65,7 @@ jobs:
           }
           EOF
 
-          cat > $TF_DIR/provider.tf <<EOF
+          cat > provider.tf <<EOF
           provider "aws" {
             region = "$AWS_REGION"
           }
