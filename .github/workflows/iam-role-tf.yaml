@@ -22,7 +22,7 @@ on:
         default: staging
 
 jobs:
-  terraform-iam:
+  IAM-Role:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}

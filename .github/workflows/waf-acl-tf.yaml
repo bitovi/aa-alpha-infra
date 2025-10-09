@@ -22,7 +22,7 @@ on:
         default: development
 
 jobs:
-  terraform-iam:
+  WAF-ACL:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
