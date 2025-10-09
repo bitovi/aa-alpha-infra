@@ -1,5 +1,5 @@
 resource "aws_wafv2_ip_set" "allowed_ips" {
-  name               = "IaC-allowed-IPs"
+  name               = "IaC-allowed-IPs-${var.environment}"
   description        = "Allowed IPs for ECS service"
   scope              = "REGIONAL" # For ALB; use CLOUDFRONT if attached to CloudFront
   ip_address_version = "IPV4"
@@ -11,7 +11,7 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
 }
 
 resource "aws_wafv2_web_acl" "ecs_waf" {
-  name        = "ecs-allowlist"
+  name        = "ECS-allowlist-${var.environment}"
   scope       = "REGIONAL"
   description = "Allow only certain IPs to access ECS ALB"
 
@@ -45,4 +45,15 @@ resource "aws_wafv2_web_acl" "ecs_waf" {
     metric_name                = "ecs-waf"
     sampled_requests_enabled   = true
   }
+}
+
+variable "aws_region" {
+  description = "AWS region to deploy resources"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "environment" {
+  description = "Environment name (e.g. staging, production)"
+  type        = string
 }
