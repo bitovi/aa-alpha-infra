@@ -1,4 +1,4 @@
-name: IAM Role Management
+name: WAF ACL Management
 
 on:
   workflow_dispatch:
