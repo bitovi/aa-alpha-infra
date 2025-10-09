@@ -19,7 +19,7 @@ on:
           - development
           - staging
           - production
-        default: staging
+        default: development
 
 jobs:
   terraform-iam:
@@ -28,10 +28,10 @@ jobs:
       name: ${{ github.event.inputs.environment }}
     env:
       AWS_REGION: ${{ vars.AWS_DEFAULT_REGION || 'us-east-1' }}
-      TF_BUCKET: aa-iam-tf-state-${{ github.event.inputs.environment }}
-      TF_STATE_KEY: iam-${{ github.event.inputs.environment }}.tfstate
+      TF_BUCKET: aa-wafacl-tf-state-${{ github.event.inputs.environment }}
+      TF_STATE_KEY: wafacl-${{ github.event.inputs.environment }}.tfstate
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-      TF_DIR: terraform/iam
+      TF_DIR: terraform/waf-acl
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

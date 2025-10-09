@@ -60,12 +60,14 @@ Provisions and manages IAM roles and policies for ECS using Terraform. This incl
 2. Configure AWS credentials and region as GitHub secrets/variables.
 3. Trigger workflows via GitHub Actions UI or API.
 4. For IAM/terraform: see `terraform/iam/iam.tf` for variable usage and customization.
+5. For IAM/terraform: see `terraform/waf-acl/acl.tf` for variable usage and customization.
 
 
 ## Repository Structure
 
 - `.github/workflows/` — Contains GitHub Actions workflow files for ECR, RDS, and IAM (Terraform) management.
 - `terraform/iam/` — Terraform code for IAM roles and policies for ECS.
+- `terraform/waf-acl/` — Terraform code for WAF IP Allowlist.
 - `README.md` — Project documentation.
 
 ## Maintainers
