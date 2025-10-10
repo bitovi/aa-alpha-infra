@@ -10,14 +10,11 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
   ]
 }
 
-resource "aws_wafv2_web_acl" "ecs_waf" {
-  name        = "ECS-allowlist-${var.environment}"
+resource "aws_wafv2_rule_group" "ecs_rule_group" {
+  name        = "ECS-allowlist-rules-${var.environment}"
   scope       = "REGIONAL"
-  description = "Allow only certain IPs to access ECS ALB"
-
-  default_action {
-    block {}
-  }
+  description = "Rule group with IP allowlist for ECS service"
+  capacity    = 10
 
   rule {
     name     = "allow-specific-ips"
@@ -42,7 +39,7 @@ resource "aws_wafv2_web_acl" "ecs_waf" {
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "ecs-waf"
+    metric_name                = "ecs-rule-group"
     sampled_requests_enabled   = true
   }
 }
