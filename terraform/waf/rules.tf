@@ -13,6 +13,7 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
     "76.65.152.145/32", # Cherif
     "67.175.238.122/32", # Tony
     "47.6.115.15/32", # Chasen
+    "191.19.41.55/32", # Lucas
   ]
 }
 
