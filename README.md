@@ -11,6 +11,7 @@ This repository contains infrastructure-as-code and automation for managing AWS 
 - **Amazon ECR (Elastic Container Registry)**
 - **Amazon RDS (Relational Database Service)**
 - **IAM roles and policies for ECS (via Terraform)**
+- **WAF rules for IP allowlisting (via Terraform)**
 
 
 ## GitHub Actions Workflows
@@ -53,6 +54,20 @@ Provisions and manages IAM roles and policies for ECS using Terraform. This incl
 **AWS resources managed:**
 - IAM roles and policies for ECS task execution and secrets access
 
+### WAF Rules Management (Terraform)
+Located at `.github/workflows/waf-rules-tf.yaml`.
+
+Provisions and manages WAF rule groups for IP allowlisting using Terraform. This includes:
+- IP set with allowed IP addresses
+- Rule group with allow/block rules
+
+**Inputs:**
+- `action`: `create` or `destroy` (required)
+- `environment`: Target environment (required)
+
+**AWS resources managed:**
+- WAF IP sets and rule groups for traffic filtering
+
 
 ## Getting Started
 
@@ -60,15 +75,20 @@ Provisions and manages IAM roles and policies for ECS using Terraform. This incl
 2. Configure AWS credentials and region as GitHub secrets/variables.
 3. Trigger workflows via GitHub Actions UI or API.
 4. For IAM/terraform: see `terraform/iam/iam.tf` for variable usage and customization.
-5. For IAM/terraform: see `terraform/waf-acl/acl.tf` for variable usage and customization.
+5. For WAF/terraform: see `terraform/waf/rules.tf` for variable usage and customization.
 
 
 ## Repository Structure
 
-- `.github/workflows/` — Contains GitHub Actions workflow files for ECR, RDS, and IAM (Terraform) management.
-- `terraform/iam/` — Terraform code for IAM roles and policies for ECS.
-- `terraform/waf-acl/` — Terraform code for WAF IP Allowlist.
+- `.github/workflows/` — Contains GitHub Actions workflow files for ECR, RDS, IAM, and WAF (Terraform) management.
+- `terraform/iam/` — Terraform code for IAM roles and policies for ECS. See [IAM Documentation](terraform/iam/README.md).
+- `terraform/waf/` — Terraform code for WAF IP allowlisting rules. See [WAF Documentation](terraform/waf/README.md).
 - `README.md` — Project documentation.
+
+## Detailed Documentation
+
+- **[IAM Roles & Permissions](terraform/iam/README.md)** - Detailed explanation of ECS IAM roles, permissions, and security practices
+- **[WAF Rules & IP Management](terraform/waf/README.md)** - Guide for managing IP allowlists and WAF rule groups
 
 ## Maintainers
 

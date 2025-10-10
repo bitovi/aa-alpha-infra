@@ -1,4 +1,4 @@
-name: WAF ACL Management
+name: WAF Rule Management
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ on:
         default: development
 
 jobs:
-  WAF-ACL:
+  WAF-Rules:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
@@ -31,7 +31,7 @@ jobs:
       TF_BUCKET: aa-wafacl-tf-state-${{ github.event.inputs.environment }}
       TF_STATE_KEY: wafacl-${{ github.event.inputs.environment }}.tfstate
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-      TF_DIR: terraform/waf-acl
+      TF_DIR: terraform/waf
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

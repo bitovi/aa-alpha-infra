@@ -5,8 +5,13 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
   ip_address_version = "IPV4"
 
   addresses = [
-    "190.138.88.251/32", # Leo's home
-    "186.130.107.46/32", # Leo's home 2
+    "190.138.88.251/32", # Leo #1
+    "186.130.107.46/32", # Leo #2
+    "72.218.190.94/32",  # Jason Ebbers
+    "197.133.30.126/32", # Ali
+    "63.143.95.30/32", # Bavin
+    "76.65.152.145/32", # Cherif
+    "67.175.238.122/32", # Tony
   ]
 }
 
