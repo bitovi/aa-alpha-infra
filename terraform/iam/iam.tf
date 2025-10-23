@@ -43,7 +43,7 @@ resource "aws_iam_policy" "ecs_task_execution_secrets_policy" {
     Statement = [
       {
         Effect   = "Allow"
-        Action   = ["secretsmanager:GetSecretValue", "ssm:GetParameters"]
+        Action   = ["secretsmanager:GetSecretValue"]
         Resource = [
           "arn:aws:secretsmanager:us-east-1:*:secret:INDEX_STANDARD_API_KEY*",
           "arn:aws:secretsmanager:us-east-1:*:secret:DATABASE_URL*",
