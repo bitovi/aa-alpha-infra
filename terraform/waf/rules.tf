@@ -6,7 +6,7 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
 
   addresses = [
     "190.138.88.251/32", # Leo #1
-    "186.130.88.31/32", # Leo #2
+    "186.130.89.187/32", # Leo #2
     "72.218.190.94/32",  # Jason Ebbers
     "197.133.191.37/32", # Ali
     "63.143.95.238/32", # Bavin
