@@ -1,4 +1,4 @@
-name: S3 Bucket Management
+name: Wichita Bucket Management
 
 on:
   workflow_dispatch:
