@@ -68,6 +68,18 @@ Provisions and manages WAF rule groups for IP allowlisting using Terraform. This
 **AWS resources managed:**
 - WAF IP sets and rule groups for traffic filtering
 
+### Wichita Bucket Management
+Located at `.github/workflows/wichita-bucket.yaml`.
+
+Provisions and manages an S3 bucket for Wichita transformed data across different environments.
+
+**Inputs:**
+- `action`: `create` or `destroy` (required)
+- `environment`: Target environment (required)
+
+**AWS resources managed:**
+- S3 bucket named `wichita-myga-file-<environment>`
+
 
 ## Getting Started
 
