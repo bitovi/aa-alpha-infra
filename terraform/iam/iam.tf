@@ -57,7 +57,8 @@ resource "aws_iam_policy" "ecs_task_execution_secrets_policy" {
           "arn:aws:secretsmanager:us-east-1:*:secret:AWS_ACCESS_KEY_ID*",
           "arn:aws:secretsmanager:us-east-1:*:secret:AWS_SECRET_ACCESS_KEY*",
           "arn:aws:secretsmanager:us-east-1:*:secret:CLERK_SECRET_KEY*",
-          "arn:aws:secretsmanager:us-east-1:*:secret:CLERK_PUBLISHABLE_KEY*"
+          "arn:aws:secretsmanager:us-east-1:*:secret:CLERK_PUBLISHABLE_KEY*",
+          "arn:aws:secretsmanager:us-east-1:*:secret:/ecs/signoz/otelcol-sidecar.yaml*"
         ]
       }
     ]
