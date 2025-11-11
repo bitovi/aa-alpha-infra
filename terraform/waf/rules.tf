@@ -19,6 +19,7 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
     "50.223.169.130/32", # Jeremiah
     "73.46.166.192/32", # Jeremiah Home
     "69.248.178.62/32", # SR
+    "104.14.122.130/32", # Zach
   ]
 }
 
