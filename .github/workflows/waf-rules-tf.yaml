@@ -11,6 +11,11 @@ on:
         options:
           - create
           - destroy
+      enable_block_rule:
+        description: "Enable the block rule for non-allowlisted IPs"
+        required: false
+        default: true
+        type: boolean
       environment:
         description: 'The environment to deploy to'
         required: true
@@ -82,7 +87,7 @@ jobs:
         working-directory: ${{ env.TF_DIR }}
         run: |
           if [ "${{ github.event.inputs.action }}" = "create" ]; then
-            terraform apply -auto-approve -var environment=${{ env.ENVIRONMENT }} -var aws_region=${{ env.AWS_REGION }}
+            terraform apply -auto-approve -var environment=${{ env.ENVIRONMENT }} -var aws_region=${{ env.AWS_REGION }} --var enable_block_rule=${{inputs.enable_block_rule}}
           else
-            terraform destroy -auto-approve -var environment=${{ env.ENVIRONMENT }} -var aws_region=${{ env.AWS_REGION }}
+            terraform destroy -auto-approve -var environment=${{ env.ENVIRONMENT }} -var aws_region=${{ env.AWS_REGION }} --var enable_block_rule=${{inputs.enable_block_rule}}
           fi

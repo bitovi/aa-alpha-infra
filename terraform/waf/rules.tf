@@ -50,28 +50,31 @@ resource "aws_wafv2_rule_group" "ecs_rule_group" {
     }
   }
 
-  rule {
-    name     = "block-all-other-traffic"
-    priority = 2
+  dynamic "rule" {
+    for_each = var.enable_block_rule ? [1] : []
+    content {
+      name     = "block-all-other-traffic"
+      priority = 2
 
-    action {
-      block {}
-    }
+      action {
+        block {}
+      }
 
-    statement {
-      not_statement {
-        statement {
-          ip_set_reference_statement {
-            arn = aws_wafv2_ip_set.allowed_ips.arn
+      statement {
+        not_statement {
+          statement {
+            ip_set_reference_statement {
+              arn = aws_wafv2_ip_set.allowed_ips.arn
+            }
           }
         }
       }
-    }
 
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "block-all-other-traffic"
-      sampled_requests_enabled   = true
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "block-all-other-traffic"
+        sampled_requests_enabled   = true
+      }
     }
   }
 
@@ -91,4 +94,10 @@ variable "aws_region" {
 variable "environment" {
   description = "Environment name (e.g. staging, production)"
   type        = string
+}
+
+variable "enable_block_rule" {
+  description = "Enable the block rule for non-allowlisted IPs"
+  type        = bool
+  default     = true
 }
