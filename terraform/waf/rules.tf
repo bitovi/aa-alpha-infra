@@ -14,7 +14,7 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
     "67.175.238.122/32", # Tony
     "47.6.115.15/32", # Chasen
     "104.28.123.86/32", # Chasen #2
-    "179.193.36.234/32", # Lucas
+    "179.193.36.40/32", # Lucas
     "136.60.161.194/32", # Greg Koenig
     "50.223.169.130/32", # Jeremiah
     "73.46.166.192/32", # Jeremiah Home
