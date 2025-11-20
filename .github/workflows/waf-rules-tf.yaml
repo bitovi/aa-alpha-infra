@@ -17,7 +17,7 @@ on:
         default: true
         type: boolean
       override_environment_default_block_setting:
-        description: "CLICK THIS IF YOU KNOW WHAT YOU ARE DOING"
+        description: "CLICK THIS IF YOU KNOW WHAT YOU ARE DOING (overrides default block rule behavior based on environment)"
         required: false
         default: false
         type: boolean
