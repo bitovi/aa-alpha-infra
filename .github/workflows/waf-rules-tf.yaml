@@ -12,12 +12,12 @@ on:
           - create
           - destroy
       enable_block_rule:
-        description: "Enable the block rule for non-allowlisted IPs"
+        description: "BLOCK NON-ALLOWED IPs"
         required: false
         default: true
         type: boolean
       override_environment_default_block_setting:
-        description: "Override the default environment setting"
+        description: "CLICK THIS IF YOU KNOW WHAT YOU ARE DOING"
         required: false
         default: false
         type: boolean
@@ -30,6 +30,18 @@ on:
           - staging
           - production
         default: development
+
+### WARNING ###
+# This workflow manages WAF rules via Terraform.
+# Changing WAF rules can have significant security implications.
+# Ensure you understand the impact of enabling or disabling block rules,
+# especially in production environments.
+#
+#
+# As a default, production environments have BLOCKING DISABLED to prevent accidental lockouts.
+#
+# The override_environment_default_block_setting input allows you to explicitly set the block rule behavior,
+# but should be used with caution.
 
 jobs:
   WAF-Rules:
