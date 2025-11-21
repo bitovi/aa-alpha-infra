@@ -11,6 +11,11 @@ on:
           - staging
           - production
         default: development
+      db_publicly_accessible:
+        description: 'Allow public access to the DB'
+        required: false
+        type: boolean
+        default: false
       tf_stack_destroy:
         description: 'Destroy the Terraform stack'
         required: false
@@ -59,7 +64,7 @@ jobs:
           aws_rds_db_insights_mode: standard
 
           aws_rds_db_user: aaengine
-          aws_rds_db_publicly_accessible: true
+          aws_rds_db_publicly_accessible: ${{ inputs.db_publicly_accessible }}
           aws_rds_db_engine_version: 16.8
 
           aws_rds_db_auto_minor_version_upgrade: true
