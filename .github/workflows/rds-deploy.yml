@@ -15,7 +15,7 @@ on:
         description: 'Allow public access to the DB'
         required: false
         type: boolean
-        default: false
+        default: true
       tf_stack_destroy:
         description: 'Destroy the Terraform stack'
         required: false
