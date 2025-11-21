@@ -33,7 +33,7 @@ jobs:
         name: ${{ inputs.environment }}
     steps:
       - id: ECR-deploy
-        uses: bitovi/github-actions-deploy-aws-ecr-registry@v0.1.1
+        uses: bitovi/github-actions-deploy-aws-ecr-registry@v0.1.2
         # https://github.com/bitovi/github-actions-deploy-aws-ecr-registry/
         with:
           aws_resource_identifier: "aa-ecr-${{ inputs.service_name }}-${{ inputs.environment }}"
@@ -67,10 +67,14 @@ jobs:
           # aws_ecr_repo_policy_input:
           # aws_ecr_repo_read_arn:
           # aws_ecr_repo_write_arn:
+          #aws_ecr_repo_read_external_aws_account: 471112793724,011379514041
+          aws_ecr_repo_read_external_aws_account: ${{ secrets.AWS_ACCOUNT_ID_ECR_READER }} 
+          #aws_ecr_repo_write_external_aws_account: 
           # aws_ecr_repo_read_arn_lambda:
           # aws_ecr_lifecycle_policy_input:
           # aws_ecr_public_repo_catalog:
           # aws_ecr_registry_policy_input:
           # aws_ecr_additional_tags:
           # Lifecycle policy for automatic cleanup
+          #aws_ecr_lifecycle_policy_input: '{\"rules\":[{\"rulePriority\":1,\"description\":\"expire-after-100\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":100},\"action\":{\"type\":\"expire\"}}]}'
           #aws_ecr_lifecycle_policy_input: '{\"rules\":[{\"rulePriority\":1,\"description\":\"Keep-last-100-releases\",\"selection\":{\"tagStatus\":\"tagged\",\"tagPrefixList\":[\"v\"],\"countType\":\"imageCountMoreThan\",\"countNumber\":100},\"action\":{\"type\":\"expire\"}},{\"rulePriority\":2,\"description\":\"Delete-untagged-older-than-10-days\",\"selection\":{\"tagStatus\":\"untagged\",\"countType\":\"sinceImagePushed\",\"countUnit\":\"days\",\"countNumber\":10},\"action\":{\"type\":\"expire\"}}]}'
